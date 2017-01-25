@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>00_simple</title>
+    <link href="css/style.css" media="screen" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../dist/tween-js.min.js"></script>
+    <script type="text/javascript" src="lib/RequestAnimationFrame.js"></script>
+</head>
+<body>
+<div id="info">
+    <h1><a href="http://github.com/byrdal/tween-js">tween-js</a></h1>
+    <h2>00 _ simplest possible example</h2>
+    <p>Creating a tween and doing little else apart from that</p>
+</div>
+
+<script>
+    var last = 0;
+    init();
+    animate(0);
+
+    function init() {
+
+        var output = document.createElement('div');
+        output.style.cssText = 'position: absolute; left: 30px; top: 300px; font-size: 100px';
+        document.body.appendChild(output);
+        output.x = 0;
+
+        TweenJS.add(new TweenJS.Tween(output)
+                .to({x: 400}, 2000)
+                .easing(TweenJS.Easing.Elastic.Out)
+                .onUpdate(function () {
+                    output.innerHTML = 'x == ' + Math.round(this.x);
+                    var transform = 'translateX(' + this.x + 'px)';
+                    output.style.webkitTransform = transform;
+                    output.style.transform = transform;
+                }).start()
+        );
+    }
+
+    function animate(time) {
+        requestAnimationFrame(animate);
+        TweenJS.update(time - last);
+        last = time;
+    }
+
+</script>
+</body>
+</html>
